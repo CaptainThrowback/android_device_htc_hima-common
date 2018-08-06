@@ -158,7 +158,9 @@ TARGET_USES_INTERACTION_BOOST := true
 BOARD_USES_QCOM_HARDWARE := true
 
 # Recovery
+ifneq ($(WITH_TWRP),true)
 TARGET_RECOVERY_FSTAB := $(COMMON_PATH)/rootdir/etc/recovery.fstab
+endif
 
 # RIL
 TARGET_RIL_VARIANT := caf
@@ -176,6 +178,11 @@ TARGET_LD_SHIM_LIBS := \
     /system/vendor/lib/libHtcVteEngine.so|libshim_camera.so \
     /system/vendor/lib64/libril.so|libshim_ril.so \
     /system/vendor/lib64/libizat_core.so|libshim_gps.so
+
+# TWRP
+ifeq ($(WITH_TWRP),true)
+include device/htc/hima-common/twrp.mk
+endif
 
 # Use Snapdragon LLVM, if available
 TARGET_USE_SDCLANG := true
